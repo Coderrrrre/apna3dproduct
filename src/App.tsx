@@ -27,6 +27,9 @@ import { ProductCard } from './components/ProductCard';
 import { TrustDeliverySection } from './components/TrustDeliverySection';
 import { PrintLabSection } from './components/PrintLabSection';
 import { OrderTrackingSection } from './components/OrderTrackingSection';
+import { ThreeDShowcaseSection } from './components/ThreeDShowcaseSection';
+import { DeliveryMapSection } from './components/DeliveryMapSection';
+import { AiWorkshopStudio } from './components/AiWorkshopStudio';
 import { CustomizerModal } from './components/CustomizerModal';
 import { CartDrawer } from './components/CartDrawer';
 import { WishlistDrawer } from './components/WishlistDrawer';
@@ -61,8 +64,16 @@ export default function App() {
   const [customFilter, setCustomFilter] = useState<
     'all' | 'plates' | 'gym-fitness' | 'names-tags'
   >('all');
+  const [quotaExceeded, setQuotaExceeded] = useState(false);
 
   const mainRef = useRef<HTMLElement>(null);
+
+  // Google Maps Platform Demo Key Quota Defense listener
+  useEffect(() => {
+    const handler = () => setQuotaExceeded(true);
+    window.addEventListener('gmp-quota-exceeded', handler);
+    return () => window.removeEventListener('gmp-quota-exceeded', handler);
+  }, []);
 
   // Light GSAP ScrollTrigger section reveals
   useEffect(() => {
@@ -283,8 +294,50 @@ export default function App() {
     }
   };
 
+  const handleCustomizeProductId = (productId: string) => {
+    const found = PRODUCTS.find((p) => p.id === productId);
+    if (!found) return;
+    if (found.customizable) {
+      handleOpenCustomizer(found);
+    } else if (found.inStock) {
+      handleAddToCart(found);
+    } else {
+      const el = document.getElementById('pooja-decor');
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      toast.info(`${found.title} is currently restocking — notify via WhatsApp desk.`);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-white text-[#111827]">
+      {quotaExceeded && (
+        <div
+          role="status"
+          className="bg-amber-50 border-b border-amber-300 text-amber-950 px-4 py-2.5 text-xs sm:text-sm flex items-center justify-between gap-3"
+        >
+          <span>
+            Map quota limit reached for this demo key.{' '}
+            <a
+              href="https://developers.google.com/maps/ai/ai-studio?utm_campaign=gmp_mcp_codeassist_v1_aistudio#quota_exceeded_errors"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline font-semibold"
+            >
+              Learn how to set up your own Google Cloud project key
+            </a>
+            .
+          </span>
+          <button
+            type="button"
+            onClick={() => setQuotaExceeded(false)}
+            className="font-semibold px-2 py-1 rounded hover:bg-amber-100 cursor-pointer shrink-0"
+            aria-label="Dismiss map quota notice"
+          >
+            Dismiss
+          </button>
+        </div>
+      )}
+
       {/* 1. Top Affiliate Bar + 2. Sticky White Header */}
       <Header
         cartCount={totalCartCount}
@@ -403,12 +456,23 @@ export default function App() {
           />
         </div>
 
-        {/* 8. Apna 3D Print Lab (STL Quote Estimator) */}
+        {/* 8. Interactive 3D Product Studio (Three.js) */}
+        <ThreeDShowcaseSection onCustomizeProductId={handleCustomizeProductId} />
+
+        {/* 9. Apna 3D Print Lab (STL Quote Estimator) */}
         <div className="gsap-reveal-section">
           <PrintLabSection onAddCustomPrintToCart={handleAddCustomPrintToCart} />
         </div>
 
-        {/* 9. Live Order Tracking Section */}
+        {/* 10. AI Print Research & Voice Order Studio */}
+        <div className="gsap-reveal-section">
+          <AiWorkshopStudio />
+        </div>
+
+        {/* 11. Interactive Google Maps India Hubs Locator */}
+        <DeliveryMapSection quotaExceeded={quotaExceeded} />
+
+        {/* 12. Live Order Tracking Section */}
         <div className="gsap-reveal-section">
           <OrderTrackingSection
             orders={orders}
@@ -417,7 +481,7 @@ export default function App() {
           />
         </div>
 
-        {/* 10. Pan-India Delivery Trust Section */}
+        {/* 13. Pan-India Delivery Trust Section */}
         <div className="gsap-reveal-section">
           <TrustDeliverySection />
         </div>
@@ -455,22 +519,28 @@ export default function App() {
               Affiliate Program (5%)
             </button>
             <a
-              href="#print-lab"
+              href="#studio-3d"
               className="hover:text-[#1F6E72] transition-colors"
             >
-              STL Quote Lab
+              3D Studio
+            </a>
+            <a
+              href="#ai-studio"
+              className="hover:text-[#1F6E72] transition-colors"
+            >
+              AI Lab
+            </a>
+            <a
+              href="#delivery-map"
+              className="hover:text-[#1F6E72] transition-colors"
+            >
+              Delivery Map
             </a>
             <a
               href="#track-order"
               className="hover:text-[#1F6E72] transition-colors"
             >
               Track Order
-            </a>
-            <a
-              href="#customized-items"
-              className="hover:text-[#1F6E72] transition-colors"
-            >
-              Custom Keychains
             </a>
             <span className="text-[#111827]">
               © {new Date().getFullYear()} Apna3DShop.in

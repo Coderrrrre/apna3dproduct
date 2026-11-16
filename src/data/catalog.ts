@@ -1,4 +1,12 @@
 import { CategoryCardItem, ColorSwatch, Product } from '../types/shop';
+import numberPlateImg from '../assets/images/keyring_number_plate_1794793386482.jpg';
+import bikeBatmanImg from '../assets/images/keyring_bike_batman_1794793386293.jpg';
+import creeperToadImg from '../assets/images/keyring_creeper_toad_1794793387540.jpg';
+import gymPlateImg from '../assets/images/keyring_gym_plate_1794793387279.jpg';
+import customNameImg from '../assets/images/keyring_custom_name_1794793387130.jpg';
+import krishnaLampImg from '../assets/images/pooja_krishna_lamp_1794793387479.jpg';
+import diwaliMandalaImg from '../assets/images/pooja_diwali_mandala_1794793388050.jpg';
+import decorLithophaneImg from '../assets/images/decor_lithophane_home_1794793388706.jpg';
 
 export const FILAMENT_SWATCHES: Record<string, ColorSwatch> = {
   charcoal: { id: 'charcoal', name: 'Matte Charcoal', hex: '#1F2937' },
@@ -11,14 +19,14 @@ export const FILAMENT_SWATCHES: Record<string, ColorSwatch> = {
 };
 
 export const IMAGES = {
-  numberPlate: '/src/assets/images/keyring_number_plate_1794793386482.jpg',
-  bikeBatman: '/src/assets/images/keyring_bike_batman_1794793386293.jpg',
-  creeperToad: '/src/assets/images/keyring_creeper_toad_1794793387540.jpg',
-  gymPlate: '/src/assets/images/keyring_gym_plate_1794793387279.jpg',
-  customName: '/src/assets/images/keyring_custom_name_1794793387130.jpg',
-  krishnaLamp: '/src/assets/images/pooja_krishna_lamp_1794793387479.jpg',
-  diwaliMandala: '/src/assets/images/pooja_diwali_mandala_1794793388050.jpg',
-  decorLithophane: '/src/assets/images/decor_lithophane_home_1794793388706.jpg',
+  numberPlate: numberPlateImg,
+  bikeBatman: bikeBatmanImg,
+  creeperToad: creeperToadImg,
+  gymPlate: gymPlateImg,
+  customName: customNameImg,
+  krishnaLamp: krishnaLampImg,
+  diwaliMandala: diwaliMandalaImg,
+  decorLithophane: decorLithophaneImg,
 } as const;
 
 export const CATEGORIES: CategoryCardItem[] = [

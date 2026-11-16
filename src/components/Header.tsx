@@ -48,9 +48,9 @@ export const Header: React.FC<HeaderProps> = ({
 
   const navItems = [
     { label: 'Keychains', href: '#customized-items' },
-    { label: 'Best Sellers', href: '#best-sellers' },
-    { label: 'Pooja & Decor', href: '#pooja-decor' },
-    { label: 'Print Lab', href: '#print-lab' },
+    { label: '3D Studio', href: '#studio-3d' },
+    { label: 'AI Lab', href: '#ai-studio' },
+    { label: 'Delivery Map', href: '#delivery-map' },
     { label: 'Track Order', href: '#track-order' },
   ];
 
